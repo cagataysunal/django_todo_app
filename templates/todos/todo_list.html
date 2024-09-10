@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>My Todo List</h1>
+  <a href="{% url 'todo_create' %}" class="btn btn-primary mb-3">Create New Todo</a>
+  {% if todos %}
+    <ul class="list-group">
+      {% for todo in todos %}
+        <li class="list-group-item">
+          <a href="{% url 'todo_detail' todo.pk %}">{{ todo.title }}</a>
+          - {% if todo.completed %}Completed{% else %}Pending{% endif %}
+          <div class="float-right">
+            <a href="{% url 'todo_update' todo.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+            <a href="{% url 'todo_delete' todo.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No todos yet. <a href="{% url 'todo_create' %}">Create one now!</a></p>
+  {% endif %}
+{% endblock %}
